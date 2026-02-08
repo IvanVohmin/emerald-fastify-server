@@ -9,6 +9,9 @@ import {
 import { getUserSongsErrorSchema, getUserSongsParamsSchema, getUserSongsResponseSchema } from "../schemas/songs/getUserSongs.schemas.js";
 import { getUserSongs } from "../controllers/songs/getUserSongs.controller.js";
 import { streamSong } from "../controllers/songs/song.stream.controller.js";
+import { getSongInfo } from "../controllers/songs/songInfo.controller.js";
+import { deleteSong } from "../controllers/songs/deleteSong.controller.js";
+import { createSong } from "../controllers/songs/createSong.controller.js";
 
 export async function songsRoutes(fastify: FastifyInstance) {
   fastify.put(
@@ -31,5 +34,8 @@ export async function songsRoutes(fastify: FastifyInstance) {
     '/user-songs',
     getUserSongs
   ),
-  fastify.get('/stream/:songId', streamSong)
+  fastify.get('/stream/:songId', streamSong),
+  fastify.get('/:songId', getSongInfo),
+  fastify.delete('/:songId', deleteSong),
+  fastify.post('/create', createSong)
 }

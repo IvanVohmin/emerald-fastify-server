@@ -39,6 +39,22 @@ export type TEditSongRequest = FastifyRequest<{
     Body: IEditSongBody
 }>
 
+export type TGetSongInfoRequest = FastifyRequest<{
+    Params: { songId: string }
+    Body: IEditSongBody
+}>
+
+export type TCreateSongInfoRequest = FastifyRequest<{
+    Body: {
+        url: string;
+    }
+}>
+
+export type TRemoveSongInfoRequest = FastifyRequest<{
+    Params: { songId: string }
+    Body: IEditSongBody
+}>
+
 export type TStreamSongRequest = FastifyRequest<{
   Params: { songId: string };
 }>;
