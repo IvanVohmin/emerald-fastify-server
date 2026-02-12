@@ -1,10 +1,12 @@
 import '@fastify/jwt'
 import type {FastifyRequest} from "fastify";
-import type admin from 'firebase-admin'
+import type admin from 'firebase-admin';
+import fastifyRedis from '@fastify/redis';
 
 declare module 'fastify' {
     interface FastifyInstance {
-        firebase: typeof admin
+        firebase: typeof admin,
+        redis: fastifyRedis.FastifyRedis,
         authenticate(
             request: FastifyRequest,
             reply: FastifyReply

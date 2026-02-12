@@ -1,6 +1,8 @@
 import type { FastifyReply } from "fastify";
 import type { TGetSongInfoRequest } from "../../types/index.js";
 import { songService } from "../../services/songs.services.js";
+import { REDIS_KEYS } from "../../configs/config.js";
+import { isEmptyObject } from "../../utils/isEmptyObject.js";
 
 export const getSongInfo = async (
   req: TGetSongInfoRequest,
@@ -16,6 +18,14 @@ export const getSongInfo = async (
       });
     }
 
+    const songRedisRecord = await req.server.redis.hgetall(`${REDIS_KEYS.songs.prefix}:${songId}`);
+    if (!isEmptyObject(songRedisRecord)) {
+      return reply.code(200).send({
+        success: true,
+        data: songRedisRecord,
+      });
+    }
+
     const songRecord = await songService.getSongById(songId);
 
     if (songRecord.length === 0) {
@@ -25,7 +35,10 @@ export const getSongInfo = async (
       });
     }
 
-    reply.code(200).send({
+    await req.server.redis.hset(`${REDIS_KEYS.songs.prefix}:${songId}`, songRecord[0]!);
+    await req.server.redis.expire(`${REDIS_KEYS.songs.prefix}:${songId}`, REDIS_KEYS.songs.ttl);
+
+    return reply.code(200).send({
       success: true,
       data: songRecord[0],
     });

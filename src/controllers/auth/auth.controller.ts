@@ -8,7 +8,6 @@ export const loginViaFirebaseToken = async (
   const authHeader = req.headers.authorization;
 
   if (!authHeader?.startsWith("Bearer ")) {
-      console.log('bearer error')
     return reply.code(401).send({ error: "No token" });
   }
 
@@ -39,7 +38,6 @@ export const loginViaFirebaseToken = async (
     return reply.send({ accessToken });
   } catch (err) {
     req.log.error(err);
-    console.log('dfdfddfdfdffdf')
     return reply.code(401).send({ error: "Invalid Firebase token" });
   }
 };
