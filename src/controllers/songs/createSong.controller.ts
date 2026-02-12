@@ -7,6 +7,7 @@ import { generateSongId } from "../../utils/generateSongId.js";
 import { songService } from "../../services/songs.services.js";
 import { saveMp3File } from "../../utils/saveMp3File.js";
 import { REDIS_KEYS } from "../../configs/config.js";
+import { getRandomPinterestCover } from "../../configs/pinterestCovers.js";
 
 export const createSong = async (
   req: TCreateSongInfoRequest,
@@ -63,6 +64,7 @@ export const createSong = async (
       ownerId,
       songId,
       tiktokUrl: url,
+      posterUrl: getRandomPinterestCover(),
       name: tikTokData.title,
     });
 
