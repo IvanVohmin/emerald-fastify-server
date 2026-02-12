@@ -2,12 +2,13 @@ import fp from 'fastify-plugin'
 import fastifyJwt from '@fastify/jwt'
 import fastifyCookie from '@fastify/cookie'
 import type { FastifyInstance } from 'fastify'
+import { JWT_SECRET } from '../configs/config.js'
 
 async function jwtPlugin(fastify: FastifyInstance) {
   fastify.register(fastifyCookie)
 
   fastify.register(fastifyJwt, {
-    secret: process.env.JWT_SECRET!,
+    secret: JWT_SECRET!,
     cookie: {
       cookieName: 'token',
       signed: false
