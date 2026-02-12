@@ -5,7 +5,7 @@ import jwtPlugin from "./plugins/jwt.js";
 import firebase from "./plugins/firebase.js";
 dotenv.config();
 
-const PORT = process.env.PORT || 5346;
+const PORT = process.env.PORT || 8787;
 
 const app = Fastify({
   logger: true,
