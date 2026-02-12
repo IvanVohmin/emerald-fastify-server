@@ -42,13 +42,6 @@ export const saveMp3File = async (
     return new Promise((resolve, reject) => {
       writer.on("finish", () => {
         const stats = fs.statSync(filePath);
-        console.log(
-          "File saved successfully:",
-          filePath,
-          "Size:",
-          stats.size,
-          "bytes",
-        );
         resolve(filePath);
       });
 
